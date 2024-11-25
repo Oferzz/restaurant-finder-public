@@ -44,6 +44,28 @@ module "eks" {
   }
 }
 
+// DynamoDB
+
+module "restaurants_table" {
+  source         = "./modules/dynamodb"
+  table_name     = "restaurants"
+  billing_mode   = "PROVISIONED"
+  hash_key       = "restaurant_id"
+  hash_key_type  = "S"
+  read_capacity  = 10
+  write_capacity = 5
+}
+
+module "audit_logs_table" {
+  source         = "./modules/dynamodb"
+  table_name     = "audit_logs"
+  billing_mode   = "PROVISIONED"
+  hash_key       = "timestamp"
+  hash_key_type  = "S"
+  read_capacity  = 10
+  write_capacity = 5
+}
+
 // EBS-CSI driver
 
 module "ebs-csi" {

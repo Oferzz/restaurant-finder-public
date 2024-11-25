@@ -1,65 +1,33 @@
 package handlers
 
 import (
-	"context"
 	"net/http"
-	"time"
 
-	"server/db"
-	"server/models"
+	"server/services"
 
+	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-var restaurantCollection = db.GetCollection("taskManager", "restaurants")
+func SearchRestaurants(c *gin.Context, client *dynamodb.Client) {
+	// Get query parameters
+	cuisine := c.Query("cuisine")
+	isKosher := c.Query("is_kosher")
+	isOpen := c.Query("is_open")
 
-func GetRestaurants(c *gin.Context) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	cursor, err := restaurantCollection.Find(ctx, bson.M{})
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching restaurants"})
-		return
+	// Create filters
+	filters := services.SearchFilters{
+		Cuisine:  cuisine,
+		IsKosher: isKosher,
+		IsOpen:   isOpen,
 	}
 
-	var restaurants []models.Restaurant
-	if err := cursor.All(ctx, &restaurants); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error parsing restaurants"})
+	// Call service function
+	restaurants, err := services.SearchRestaurants(c.Request.Context(), client, "restaurants", filters)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, restaurants)
-}
-
-func GetRestaurantByID(c *gin.Context) {
-	id := c.Param("id")
-	objID, _ := primitive.ObjectIDFromHex(id)
-
-	var restaurant models.Restaurant
-	err := restaurantCollection.FindOne(context.Background(), bson.M{"_id": objID}).Decode(&restaurant)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Restaurant not found"})
-		return
-	}
-
-	c.JSON(http.StatusOK, restaurant)
-}
-
-func CreateRestaurant(c *gin.Context) {
-	var restaurant models.Restaurant
-	if err := c.ShouldBindJSON(&restaurant); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
-		return
-	}
-
-	result, err := restaurantCollection.InsertOne(context.Background(), restaurant)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create restaurant"})
-		return
-	}
-
-	c.JSON(http.StatusCreated, gin.H{"id": result.InsertedID})
 }

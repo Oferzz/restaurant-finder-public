@@ -1,0 +1,902 @@
+[
+    {
+        "restaurant_id": "1",
+        "restaurant_name": "Restaurant 1",
+        "address": "6218 Pine St, San Diego, USA",
+        "phone": "+1-559-794-2214",
+        "website": "www.restaurant1.com",
+        "opening_hours": {
+            "Monday": "8:00-20:00",
+            "Tuesday": "8:00-20:00",
+            "Wednesday": "8:00-21:00",
+            "Thursday": "11:00-20:00",
+            "Friday": "11:00-18:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-21:00"
+        },
+        "cuisine_type": "Vegan",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "2",
+        "restaurant_name": "Restaurant 2",
+        "address": "865 Pine St, New York, USA",
+        "phone": "+1-411-556-4076",
+        "website": "www.restaurant2.com",
+        "opening_hours": {
+            "Monday": "11:00-23:00",
+            "Tuesday": "10:00-22:00",
+            "Wednesday": "12:00-21:00",
+            "Thursday": "8:00-18:00",
+            "Friday": "8:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "11:00-18:00"
+        },
+        "cuisine_type": "Italian",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "3",
+        "restaurant_name": "Restaurant 3",
+        "address": "6528 Broadway, Houston, USA",
+        "phone": "+1-771-225-1126",
+        "website": "www.restaurant3.com",
+        "opening_hours": {
+            "Monday": "9:00-20:00",
+            "Tuesday": "12:00-19:00",
+            "Wednesday": "12:00-23:00",
+            "Thursday": "10:00-19:00",
+            "Friday": "8:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-22:00"
+        },
+        "cuisine_type": "American",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "4",
+        "restaurant_name": "Restaurant 4",
+        "address": "7186 Broadway, Philadelphia, USA",
+        "phone": "+1-380-301-3639",
+        "website": "www.restaurant4.com",
+        "opening_hours": {
+            "Monday": "10:00-21:00",
+            "Tuesday": "10:00-23:00",
+            "Wednesday": "12:00-22:00",
+            "Thursday": "9:00-20:00",
+            "Friday": "10:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-18:00"
+        },
+        "cuisine_type": "Vegan",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "5",
+        "restaurant_name": "Restaurant 5",
+        "address": "958 Broadway, Dallas, USA",
+        "phone": "+1-315-971-3943",
+        "website": "www.restaurant5.com",
+        "opening_hours": {
+            "Monday": "12:00-21:00",
+            "Tuesday": "8:00-22:00",
+            "Wednesday": "8:00-21:00",
+            "Thursday": "12:00-18:00",
+            "Friday": "10:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "11:00-19:00"
+        },
+        "cuisine_type": "Japanese",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "6",
+        "restaurant_name": "Restaurant 6",
+        "address": "8065 High St, San Antonio, USA",
+        "phone": "+1-454-353-4699",
+        "website": "www.restaurant6.com",
+        "opening_hours": {
+            "Monday": "12:00-20:00",
+            "Tuesday": "8:00-23:00",
+            "Wednesday": "8:00-23:00",
+            "Thursday": "11:00-22:00",
+            "Friday": "8:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "9:00-23:00"
+        },
+        "cuisine_type": "Greek",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "7",
+        "restaurant_name": "Restaurant 7",
+        "address": "1651 Pine St, Dallas, USA",
+        "phone": "+1-249-403-2187",
+        "website": "www.restaurant7.com",
+        "opening_hours": {
+            "Monday": "11:00-19:00",
+            "Tuesday": "11:00-20:00",
+            "Wednesday": "8:00-21:00",
+            "Thursday": "10:00-21:00",
+            "Friday": "9:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-19:00"
+        },
+        "cuisine_type": "Italian",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "8",
+        "restaurant_name": "Restaurant 8",
+        "address": "6746 Oak St, Chicago, USA",
+        "phone": "+1-878-988-2720",
+        "website": "www.restaurant8.com",
+        "opening_hours": {
+            "Monday": "12:00-20:00",
+            "Tuesday": "12:00-21:00",
+            "Wednesday": "12:00-19:00",
+            "Thursday": "9:00-23:00",
+            "Friday": "12:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-20:00"
+        },
+        "cuisine_type": "Thai",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "9",
+        "restaurant_name": "Restaurant 9",
+        "address": "2694 Elm St, Los Angeles, USA",
+        "phone": "+1-302-251-9816",
+        "website": "www.restaurant9.com",
+        "opening_hours": {
+            "Monday": "11:00-22:00",
+            "Tuesday": "12:00-22:00",
+            "Wednesday": "8:00-23:00",
+            "Thursday": "12:00-20:00",
+            "Friday": "9:00-19:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-18:00"
+        },
+        "cuisine_type": "Mexican",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "10",
+        "restaurant_name": "Restaurant 10",
+        "address": "9096 Broadway, New York, USA",
+        "phone": "+1-414-975-8318",
+        "website": "www.restaurant10.com",
+        "opening_hours": {
+            "Monday": "8:00-20:00",
+            "Tuesday": "8:00-21:00",
+            "Wednesday": "10:00-18:00",
+            "Thursday": "11:00-22:00",
+            "Friday": "10:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-19:00"
+        },
+        "cuisine_type": "Japanese",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "11",
+        "restaurant_name": "Restaurant 11",
+        "address": "3411 Maple Ave, Chicago, USA",
+        "phone": "+1-245-697-7828",
+        "website": "www.restaurant11.com",
+        "opening_hours": {
+            "Monday": "11:00-21:00",
+            "Tuesday": "11:00-23:00",
+            "Wednesday": "11:00-20:00",
+            "Thursday": "11:00-18:00",
+            "Friday": "8:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "9:00-23:00"
+        },
+        "cuisine_type": "Vegan",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "12",
+        "restaurant_name": "Restaurant 12",
+        "address": "430 Cedar St, Philadelphia, USA",
+        "phone": "+1-550-862-7001",
+        "website": "www.restaurant12.com",
+        "opening_hours": {
+            "Monday": "12:00-22:00",
+            "Tuesday": "9:00-23:00",
+            "Wednesday": "12:00-21:00",
+            "Thursday": "12:00-23:00",
+            "Friday": "12:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "9:00-23:00"
+        },
+        "cuisine_type": "Mexican",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "13",
+        "restaurant_name": "Restaurant 13",
+        "address": "3962 Main St, San Antonio, USA",
+        "phone": "+1-478-482-7242",
+        "website": "www.restaurant13.com",
+        "opening_hours": {
+            "Monday": "9:00-20:00",
+            "Tuesday": "9:00-23:00",
+            "Wednesday": "9:00-23:00",
+            "Thursday": "11:00-19:00",
+            "Friday": "12:00-18:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-20:00"
+        },
+        "cuisine_type": "Japanese",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "14",
+        "restaurant_name": "Restaurant 14",
+        "address": "7140 Maple Ave, San Antonio, USA",
+        "phone": "+1-201-866-1657",
+        "website": "www.restaurant14.com",
+        "opening_hours": {
+            "Monday": "10:00-21:00",
+            "Tuesday": "11:00-18:00",
+            "Wednesday": "9:00-22:00",
+            "Thursday": "8:00-18:00",
+            "Friday": "11:00-23:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-20:00"
+        },
+        "cuisine_type": "Mexican",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "15",
+        "restaurant_name": "Restaurant 15",
+        "address": "2273 Cedar St, Dallas, USA",
+        "phone": "+1-448-425-5837",
+        "website": "www.restaurant15.com",
+        "opening_hours": {
+            "Monday": "8:00-22:00",
+            "Tuesday": "8:00-19:00",
+            "Wednesday": "10:00-19:00",
+            "Thursday": "9:00-21:00",
+            "Friday": "10:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-22:00"
+        },
+        "cuisine_type": "French",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "16",
+        "restaurant_name": "Restaurant 16",
+        "address": "3483 Main St, San Antonio, USA",
+        "phone": "+1-501-839-6038",
+        "website": "www.restaurant16.com",
+        "opening_hours": {
+            "Monday": "12:00-23:00",
+            "Tuesday": "9:00-20:00",
+            "Wednesday": "10:00-20:00",
+            "Thursday": "12:00-19:00",
+            "Friday": "8:00-19:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-20:00"
+        },
+        "cuisine_type": "Japanese",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "17",
+        "restaurant_name": "Restaurant 17",
+        "address": "4386 Maple Ave, New York, USA",
+        "phone": "+1-529-922-8494",
+        "website": "www.restaurant17.com",
+        "opening_hours": {
+            "Monday": "10:00-19:00",
+            "Tuesday": "12:00-18:00",
+            "Wednesday": "10:00-18:00",
+            "Thursday": "10:00-18:00",
+            "Friday": "10:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-23:00"
+        },
+        "cuisine_type": "French",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "18",
+        "restaurant_name": "Restaurant 18",
+        "address": "8669 Elm St, New York, USA",
+        "phone": "+1-732-321-3110",
+        "website": "www.restaurant18.com",
+        "opening_hours": {
+            "Monday": "8:00-21:00",
+            "Tuesday": "11:00-22:00",
+            "Wednesday": "8:00-22:00",
+            "Thursday": "9:00-22:00",
+            "Friday": "10:00-19:00",
+            "Saturday": "Closed",
+            "Sunday": "11:00-23:00"
+        },
+        "cuisine_type": "Japanese",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "19",
+        "restaurant_name": "Restaurant 19",
+        "address": "387 Oak St, Los Angeles, USA",
+        "phone": "+1-328-905-1563",
+        "website": "www.restaurant19.com",
+        "opening_hours": {
+            "Monday": "8:00-22:00",
+            "Tuesday": "12:00-21:00",
+            "Wednesday": "12:00-22:00",
+            "Thursday": "10:00-20:00",
+            "Friday": "10:00-18:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-18:00"
+        },
+        "cuisine_type": "Thai",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "20",
+        "restaurant_name": "Restaurant 20",
+        "address": "3913 Main St, New York, USA",
+        "phone": "+1-789-178-4802",
+        "website": "www.restaurant20.com",
+        "opening_hours": {
+            "Monday": "8:00-23:00",
+            "Tuesday": "11:00-20:00",
+            "Wednesday": "8:00-20:00",
+            "Thursday": "9:00-20:00",
+            "Friday": "9:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "9:00-18:00"
+        },
+        "cuisine_type": "French",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "21",
+        "restaurant_name": "Restaurant 21",
+        "address": "6978 Maple Ave, Chicago, USA",
+        "phone": "+1-738-619-7372",
+        "website": "www.restaurant21.com",
+        "opening_hours": {
+            "Monday": "10:00-20:00",
+            "Tuesday": "11:00-18:00",
+            "Wednesday": "10:00-19:00",
+            "Thursday": "8:00-22:00",
+            "Friday": "12:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-19:00"
+        },
+        "cuisine_type": "Thai",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "22",
+        "restaurant_name": "Restaurant 22",
+        "address": "4440 1st Ave, Philadelphia, USA",
+        "phone": "+1-576-158-8790",
+        "website": "www.restaurant22.com",
+        "opening_hours": {
+            "Monday": "10:00-20:00",
+            "Tuesday": "10:00-20:00",
+            "Wednesday": "8:00-19:00",
+            "Thursday": "11:00-21:00",
+            "Friday": "10:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-18:00"
+        },
+        "cuisine_type": "Greek",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "23",
+        "restaurant_name": "Restaurant 23",
+        "address": "4907 Pine St, Philadelphia, USA",
+        "phone": "+1-816-669-9037",
+        "website": "www.restaurant23.com",
+        "opening_hours": {
+            "Monday": "9:00-23:00",
+            "Tuesday": "9:00-21:00",
+            "Wednesday": "12:00-19:00",
+            "Thursday": "10:00-20:00",
+            "Friday": "10:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "11:00-21:00"
+        },
+        "cuisine_type": "Vegan",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "24",
+        "restaurant_name": "Restaurant 24",
+        "address": "8143 1st Ave, San Antonio, USA",
+        "phone": "+1-800-785-3333",
+        "website": "www.restaurant24.com",
+        "opening_hours": {
+            "Monday": "10:00-21:00",
+            "Tuesday": "9:00-18:00",
+            "Wednesday": "9:00-22:00",
+            "Thursday": "9:00-19:00",
+            "Friday": "8:00-19:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-23:00"
+        },
+        "cuisine_type": "Vegan",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "25",
+        "restaurant_name": "Restaurant 25",
+        "address": "8034 Market St, San Jose, USA",
+        "phone": "+1-234-835-1555",
+        "website": "www.restaurant25.com",
+        "opening_hours": {
+            "Monday": "11:00-20:00",
+            "Tuesday": "10:00-18:00",
+            "Wednesday": "10:00-21:00",
+            "Thursday": "9:00-22:00",
+            "Friday": "10:00-23:00",
+            "Saturday": "Closed",
+            "Sunday": "11:00-21:00"
+        },
+        "cuisine_type": "Mexican",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "26",
+        "restaurant_name": "Restaurant 26",
+        "address": "3998 Elm St, New York, USA",
+        "phone": "+1-283-215-5191",
+        "website": "www.restaurant26.com",
+        "opening_hours": {
+            "Monday": "12:00-19:00",
+            "Tuesday": "12:00-22:00",
+            "Wednesday": "12:00-23:00",
+            "Thursday": "9:00-20:00",
+            "Friday": "8:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-21:00"
+        },
+        "cuisine_type": "French",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "27",
+        "restaurant_name": "Restaurant 27",
+        "address": "6183 Oak St, San Jose, USA",
+        "phone": "+1-343-925-3813",
+        "website": "www.restaurant27.com",
+        "opening_hours": {
+            "Monday": "11:00-22:00",
+            "Tuesday": "9:00-18:00",
+            "Wednesday": "11:00-23:00",
+            "Thursday": "10:00-18:00",
+            "Friday": "12:00-18:00",
+            "Saturday": "Closed",
+            "Sunday": "11:00-18:00"
+        },
+        "cuisine_type": "American",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "28",
+        "restaurant_name": "Restaurant 28",
+        "address": "1508 Elm St, Houston, USA",
+        "phone": "+1-819-502-6615",
+        "website": "www.restaurant28.com",
+        "opening_hours": {
+            "Monday": "9:00-21:00",
+            "Tuesday": "8:00-21:00",
+            "Wednesday": "11:00-19:00",
+            "Thursday": "9:00-18:00",
+            "Friday": "11:00-23:00",
+            "Saturday": "Closed",
+            "Sunday": "9:00-21:00"
+        },
+        "cuisine_type": "Greek",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "29",
+        "restaurant_name": "Restaurant 29",
+        "address": "1383 Cedar St, Chicago, USA",
+        "phone": "+1-497-477-9163",
+        "website": "www.restaurant29.com",
+        "opening_hours": {
+            "Monday": "11:00-20:00",
+            "Tuesday": "9:00-21:00",
+            "Wednesday": "9:00-20:00",
+            "Thursday": "9:00-23:00",
+            "Friday": "9:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-22:00"
+        },
+        "cuisine_type": "Vegan",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "30",
+        "restaurant_name": "Restaurant 30",
+        "address": "3582 1st Ave, Dallas, USA",
+        "phone": "+1-894-856-4553",
+        "website": "www.restaurant30.com",
+        "opening_hours": {
+            "Monday": "10:00-20:00",
+            "Tuesday": "9:00-18:00",
+            "Wednesday": "10:00-18:00",
+            "Thursday": "8:00-18:00",
+            "Friday": "12:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "9:00-19:00"
+        },
+        "cuisine_type": "Greek",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "31",
+        "restaurant_name": "Restaurant 31",
+        "address": "4677 Oak St, New York, USA",
+        "phone": "+1-780-383-8386",
+        "website": "www.restaurant31.com",
+        "opening_hours": {
+            "Monday": "8:00-23:00",
+            "Tuesday": "12:00-21:00",
+            "Wednesday": "9:00-23:00",
+            "Thursday": "11:00-21:00",
+            "Friday": "10:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-18:00"
+        },
+        "cuisine_type": "Mexican",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "32",
+        "restaurant_name": "Restaurant 32",
+        "address": "6599 Pine St, Philadelphia, USA",
+        "phone": "+1-749-899-2590",
+        "website": "www.restaurant32.com",
+        "opening_hours": {
+            "Monday": "9:00-21:00",
+            "Tuesday": "11:00-23:00",
+            "Wednesday": "12:00-19:00",
+            "Thursday": "12:00-22:00",
+            "Friday": "9:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-18:00"
+        },
+        "cuisine_type": "Vegan",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "33",
+        "restaurant_name": "Restaurant 33",
+        "address": "5475 Broadway, Dallas, USA",
+        "phone": "+1-466-576-6003",
+        "website": "www.restaurant33.com",
+        "opening_hours": {
+            "Monday": "10:00-20:00",
+            "Tuesday": "9:00-18:00",
+            "Wednesday": "12:00-20:00",
+            "Thursday": "11:00-22:00",
+            "Friday": "12:00-19:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-19:00"
+        },
+        "cuisine_type": "French",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "34",
+        "restaurant_name": "Restaurant 34",
+        "address": "4785 Maple Ave, New York, USA",
+        "phone": "+1-960-397-3873",
+        "website": "www.restaurant34.com",
+        "opening_hours": {
+            "Monday": "11:00-23:00",
+            "Tuesday": "12:00-18:00",
+            "Wednesday": "9:00-22:00",
+            "Thursday": "12:00-23:00",
+            "Friday": "9:00-19:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-23:00"
+        },
+        "cuisine_type": "Mexican",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "35",
+        "restaurant_name": "Restaurant 35",
+        "address": "1142 1st Ave, Chicago, USA",
+        "phone": "+1-278-803-5088",
+        "website": "www.restaurant35.com",
+        "opening_hours": {
+            "Monday": "12:00-19:00",
+            "Tuesday": "11:00-20:00",
+            "Wednesday": "11:00-21:00",
+            "Thursday": "9:00-21:00",
+            "Friday": "8:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "9:00-19:00"
+        },
+        "cuisine_type": "Italian",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "36",
+        "restaurant_name": "Restaurant 36",
+        "address": "8546 Market St, Houston, USA",
+        "phone": "+1-248-149-7991",
+        "website": "www.restaurant36.com",
+        "opening_hours": {
+            "Monday": "11:00-21:00",
+            "Tuesday": "9:00-23:00",
+            "Wednesday": "8:00-23:00",
+            "Thursday": "12:00-18:00",
+            "Friday": "8:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-21:00"
+        },
+        "cuisine_type": "Greek",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "37",
+        "restaurant_name": "Restaurant 37",
+        "address": "2067 Oak St, Los Angeles, USA",
+        "phone": "+1-564-741-3501",
+        "website": "www.restaurant37.com",
+        "opening_hours": {
+            "Monday": "11:00-21:00",
+            "Tuesday": "12:00-20:00",
+            "Wednesday": "9:00-18:00",
+            "Thursday": "11:00-22:00",
+            "Friday": "12:00-23:00",
+            "Saturday": "Closed",
+            "Sunday": "11:00-21:00"
+        },
+        "cuisine_type": "Indian",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "38",
+        "restaurant_name": "Restaurant 38",
+        "address": "1285 1st Ave, San Antonio, USA",
+        "phone": "+1-416-766-3195",
+        "website": "www.restaurant38.com",
+        "opening_hours": {
+            "Monday": "8:00-19:00",
+            "Tuesday": "10:00-20:00",
+            "Wednesday": "11:00-22:00",
+            "Thursday": "8:00-20:00",
+            "Friday": "10:00-23:00",
+            "Saturday": "Closed",
+            "Sunday": "9:00-22:00"
+        },
+        "cuisine_type": "American",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "39",
+        "restaurant_name": "Restaurant 39",
+        "address": "4946 Maple Ave, Dallas, USA",
+        "phone": "+1-458-270-6125",
+        "website": "www.restaurant39.com",
+        "opening_hours": {
+            "Monday": "9:00-23:00",
+            "Tuesday": "10:00-23:00",
+            "Wednesday": "9:00-22:00",
+            "Thursday": "10:00-19:00",
+            "Friday": "9:00-23:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-22:00"
+        },
+        "cuisine_type": "Chinese",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "40",
+        "restaurant_name": "Restaurant 40",
+        "address": "7041 Market St, New York, USA",
+        "phone": "+1-244-170-8231",
+        "website": "www.restaurant40.com",
+        "opening_hours": {
+            "Monday": "8:00-22:00",
+            "Tuesday": "12:00-19:00",
+            "Wednesday": "10:00-23:00",
+            "Thursday": "12:00-21:00",
+            "Friday": "10:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-21:00"
+        },
+        "cuisine_type": "Thai",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "41",
+        "restaurant_name": "Restaurant 41",
+        "address": "2799 Elm St, Houston, USA",
+        "phone": "+1-915-956-4974",
+        "website": "www.restaurant41.com",
+        "opening_hours": {
+            "Monday": "11:00-21:00",
+            "Tuesday": "10:00-23:00",
+            "Wednesday": "10:00-21:00",
+            "Thursday": "12:00-20:00",
+            "Friday": "10:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-22:00"
+        },
+        "cuisine_type": "Italian",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "42",
+        "restaurant_name": "Restaurant 42",
+        "address": "292 Main St, Phoenix, USA",
+        "phone": "+1-655-337-9899",
+        "website": "www.restaurant42.com",
+        "opening_hours": {
+            "Monday": "9:00-21:00",
+            "Tuesday": "8:00-19:00",
+            "Wednesday": "11:00-22:00",
+            "Thursday": "10:00-20:00",
+            "Friday": "10:00-19:00",
+            "Saturday": "Closed",
+            "Sunday": "11:00-20:00"
+        },
+        "cuisine_type": "Chinese",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "43",
+        "restaurant_name": "Restaurant 43",
+        "address": "6698 Broadway, San Diego, USA",
+        "phone": "+1-208-375-7740",
+        "website": "www.restaurant43.com",
+        "opening_hours": {
+            "Monday": "8:00-19:00",
+            "Tuesday": "11:00-23:00",
+            "Wednesday": "10:00-21:00",
+            "Thursday": "8:00-22:00",
+            "Friday": "8:00-20:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-23:00"
+        },
+        "cuisine_type": "Chinese",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "44",
+        "restaurant_name": "Restaurant 44",
+        "address": "9871 Broadway, San Antonio, USA",
+        "phone": "+1-824-117-3050",
+        "website": "www.restaurant44.com",
+        "opening_hours": {
+            "Monday": "10:00-20:00",
+            "Tuesday": "8:00-22:00",
+            "Wednesday": "8:00-20:00",
+            "Thursday": "12:00-20:00",
+            "Friday": "11:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-23:00"
+        },
+        "cuisine_type": "Chinese",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "45",
+        "restaurant_name": "Restaurant 45",
+        "address": "9918 Cedar St, San Antonio, USA",
+        "phone": "+1-917-763-1834",
+        "website": "www.restaurant45.com",
+        "opening_hours": {
+            "Monday": "11:00-23:00",
+            "Tuesday": "10:00-18:00",
+            "Wednesday": "8:00-23:00",
+            "Thursday": "10:00-22:00",
+            "Friday": "12:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "12:00-21:00"
+        },
+        "cuisine_type": "Japanese",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "46",
+        "restaurant_name": "Restaurant 46",
+        "address": "6293 Main St, San Antonio, USA",
+        "phone": "+1-338-966-4242",
+        "website": "www.restaurant46.com",
+        "opening_hours": {
+            "Monday": "12:00-19:00",
+            "Tuesday": "10:00-22:00",
+            "Wednesday": "12:00-19:00",
+            "Thursday": "11:00-23:00",
+            "Friday": "8:00-23:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-23:00"
+        },
+        "cuisine_type": "Italian",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "47",
+        "restaurant_name": "Restaurant 47",
+        "address": "5799 Elm St, Houston, USA",
+        "phone": "+1-764-568-4619",
+        "website": "www.restaurant47.com",
+        "opening_hours": {
+            "Monday": "10:00-21:00",
+            "Tuesday": "11:00-19:00",
+            "Wednesday": "9:00-20:00",
+            "Thursday": "8:00-22:00",
+            "Friday": "9:00-18:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-21:00"
+        },
+        "cuisine_type": "Japanese",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "48",
+        "restaurant_name": "Restaurant 48",
+        "address": "2302 Elm St, Dallas, USA",
+        "phone": "+1-409-521-4799",
+        "website": "www.restaurant48.com",
+        "opening_hours": {
+            "Monday": "8:00-21:00",
+            "Tuesday": "9:00-20:00",
+            "Wednesday": "11:00-21:00",
+            "Thursday": "11:00-20:00",
+            "Friday": "9:00-23:00",
+            "Saturday": "Closed",
+            "Sunday": "10:00-23:00"
+        },
+        "cuisine_type": "Japanese",
+        "is_kosher": true
+    },
+    {
+        "restaurant_id": "49",
+        "restaurant_name": "Restaurant 49",
+        "address": "1000 Broadway, Houston, USA",
+        "phone": "+1-802-889-9097",
+        "website": "www.restaurant49.com",
+        "opening_hours": {
+            "Monday": "9:00-22:00",
+            "Tuesday": "8:00-19:00",
+            "Wednesday": "11:00-22:00",
+            "Thursday": "8:00-21:00",
+            "Friday": "9:00-21:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-19:00"
+        },
+        "cuisine_type": "Mexican",
+        "is_kosher": false
+    },
+    {
+        "restaurant_id": "50",
+        "restaurant_name": "Restaurant 50",
+        "address": "516 Cedar St, Houston, USA",
+        "phone": "+1-543-687-1143",
+        "website": "www.restaurant50.com",
+        "opening_hours": {
+            "Monday": "8:00-22:00",
+            "Tuesday": "11:00-22:00",
+            "Wednesday": "8:00-21:00",
+            "Thursday": "12:00-23:00",
+            "Friday": "10:00-22:00",
+            "Saturday": "Closed",
+            "Sunday": "8:00-19:00"
+        },
+        "cuisine_type": "Greek",
+        "is_kosher": true
+    }
+]
