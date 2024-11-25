@@ -100,6 +100,7 @@ func main() {
 	// Initialize Gin routes with the DynamoDB client
 	r := setupRoutes(svc)
 
+	r.Static("/static", "./fe")
 	r.StaticFile("/admin", "./fe/admin.html")
 
 	// Determine the port from environment variables

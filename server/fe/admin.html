@@ -3,186 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        header {
-            background: #007BFF;
-            color: white;
-            padding: 1em 0;
-            text-align: center;
-        }
-        section {
-            max-width: 800px;
-            margin: 2em auto;
-            background: white;
-            padding: 1.5em;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        input, button, textarea {
-            width: 100%;
-            margin: 0.5em 0;
-            padding: 0.8em;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            background: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1em 0;
-        }
-        table th, table td {
-            border: 1px solid #ddd;
-            padding: 0.8em;
-            text-align: left;
-        }
-        table th {
-            background: #007BFF;
-            color: white;
-        }
-    </style>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional: Add styling if needed -->
 </head>
 <body>
     <header>
         <h1>Admin Dashboard</h1>
     </header>
-    <section>
-        <h2>Login</h2>
-        <form id="login-form">
-            <label for="password">Admin Password:</label>
-            <input type="password" id="password" placeholder="Enter admin password" required>
-            <button type="submit">Login</button>
-        </form>
-    </section>
-    <section style="display: none;" id="admin-section">
-        <h2>Restaurant Management</h2>
-        <form id="add-restaurant-form">
-            <h3>Add Restaurant</h3>
-            <input type="text" id="restaurant_name" placeholder="Restaurant Name" required>
-            <input type="text" id="address" placeholder="Address" required>
-            <input type="text" id="phone" placeholder="Phone" required>
-            <input type="text" id="website" placeholder="Website" required>
-            <textarea id="opening_hours" placeholder="Opening Hours (JSON format)" required></textarea>
-            <input type="text" id="cuisine_type" placeholder="Cuisine Type" required>
-            <label>
-                <input type="checkbox" id="is_kosher">
-                Kosher
-            </label>
-            <button type="submit">Add Restaurant</button>
-        </form>
-        <h3>Existing Restaurants</h3>
-        <table id="restaurant-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Populated via JavaScript -->
-            </tbody>
-        </table>
-        <h2>Audit Logs</h2>
-        <table id="audit-log-table">
-            <thead>
-                <tr>
-                    <th>Timestamp</th>
-                    <th>Query</th>
-                    <th>IP</th>
-                    <th>Country</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Populated via JavaScript -->
-            </tbody>
-        </table>
-    </section>
-    <script>
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const password = document.getElementById('password').value;
-            const response = await fetch('/admin/audit-logs', {
-                method: 'GET',
-                headers: { 'Authorization': password }
-            });
-            if (response.ok) {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('admin-section').style.display = 'block';
-                loadRestaurants(password);
-                loadAuditLogs(password);
-            } else {
-                alert('Invalid password');
-            }
-        });
+    <main>
+        <section id="login-section">
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="password">Admin Password:</label>
+                <input type="password" id="password" placeholder="Enter admin password" required>
+                <button type="submit">Login</button>
+            </form>
+        </section>
 
-        async function loadRestaurants(password) {
-            // Fetch restaurants and populate table
-            const response = await fetch('/restaurants', {
-                headers: { 'Authorization': password }
-            });
-            const restaurants = await response.json();
-            const tbody = document.getElementById('restaurant-table').querySelector('tbody');
-            tbody.innerHTML = '';
-            restaurants.forEach((r) => {
-                const row = `<tr>
-                    <td>${r.restaurant_id}</td>
-                    <td>${r.restaurant_name}</td>
-                    <td>
-                        <button onclick="editRestaurant('${r.restaurant_id}', '${password}')">Edit</button>
-                        <button onclick="deleteRestaurant('${r.restaurant_id}', '${password}')">Delete</button>
-                    </td>
-                </tr>`;
-                tbody.innerHTML += row;
-            });
-        }
+        <section id="admin-section" style="display: none;">
+            <h2>Restaurant Management</h2>
+            <form id="add-restaurant-form">
+                <h3>Add Restaurant</h3>
+                <input type="text" id="restaurant_name" placeholder="Restaurant Name" required>
+                <input type="text" id="address" placeholder="Address" required>
+                <input type="text" id="phone" placeholder="Phone" required>
+                <input type="text" id="website" placeholder="Website" required>
+                <textarea id="opening_hours" placeholder="Opening Hours (JSON format)" required></textarea>
+                <input type="text" id="cuisine_type" placeholder="Cuisine Type" required>
+                <label>
+                    <input type="checkbox" id="is_kosher">
+                    Kosher
+                </label>
+                <button type="submit">Add Restaurant</button>
+            </form>
 
-        async function loadAuditLogs(password) {
-            // Fetch audit logs and populate table
-            const response = await fetch('/admin/audit-logs', {
-                headers: { 'Authorization': password }
-            });
-            const logs = await response.json();
-            const tbody = document.getElementById('audit-log-table').querySelector('tbody');
-            tbody.innerHTML = '';
-            logs.forEach((log) => {
-                const row = `<tr>
-                    <td>${log.timestamp}</td>
-                    <td>${log.query}</td>
-                    <td>${log.ip}</td>
-                    <td>${log.country}</td>
-                </tr>`;
-                tbody.innerHTML += row;
-            });
-        }
+            <h3>Existing Restaurants</h3>
+            <table id="restaurant-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Populated via JavaScript -->
+                </tbody>
+            </table>
 
-        async function deleteRestaurant(id, password) {
-            const response = await fetch(`/admin/restaurants/${id}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': password }
-            });
-            if (response.ok) {
-                alert('Restaurant deleted');
-                loadRestaurants(password);
-            } else {
-                alert('Failed to delete restaurant');
-            }
-        }
-    </script>
+            <h2>Audit Logs</h2>
+            <table id="audit-log-table">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Query</th>
+                        <th>IP</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Populated via JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="admin.js"></script>
 </body>
 </html>
