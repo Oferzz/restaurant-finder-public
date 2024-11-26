@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restaurants-finder
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: restaurants-finder
+  template:
+    metadata:
+      labels:
+        app: restaurants-finder
+    spec:
+      serviceAccountName: restaurants-finder-sa
+      containers:
+      - name: restaurants-finder
+        image: 314146301965.dkr.ecr.us-east-1.amazonaws.com/restaurant-api:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: admin-secret
+              key: ADMIN_PASSWORD
+        - name: TABLE_NAME
+          value: "restaurants"
+        - name: AWS_REGION
+          value: "us-east-1"
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20

@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"server/models"
 	"server/services"
@@ -13,20 +14,18 @@ import (
 )
 
 func generateUniqueID() string {
-	return uuid.New().String() // Generates a UUID
+	return uuid.New().String()
 }
 
 func AddRestaurant(c *gin.Context, client *dynamodb.Client) {
 	var restaurant models.Restaurant
 
-	// Parse the JSON payload
 	if err := c.ShouldBindJSON(&restaurant); err != nil {
 		log.Printf("Error binding JSON: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid restaurant data", "details": err.Error()})
 		return
 	}
 
-	// Generate a unique RestaurantID if not provided
 	if restaurant.RestaurantID == "" {
 		restaurant.RestaurantID = generateUniqueID()
 	}
@@ -99,27 +98,23 @@ func GetRestaurantByID(c *gin.Context, client *dynamodb.Client) {
 // AdminAuthMiddleware protects admin routes with a password
 func AdminAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		adminPassword := "admin"
-		if adminPassword == "" {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Admin password not configured"})
-			c.Abort()
+		// Get the password from the Authorization header
+		providedPassword := c.GetHeader("Authorization")
+
+		// Get the expected admin password
+		expectedPassword := os.Getenv("ADMIN_PASSWORD")
+		if expectedPassword == "" {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Server is not configured properly"})
 			return
 		}
 
-		// Get the password from query or header
-		password := c.Query("password")
-		if password == "" {
-			password = c.GetHeader("Authorization")
-		}
-
-		// Validate the password
-		if password != adminPassword {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized access"})
-			c.Abort()
+		// Check if the provided password matches
+		if providedPassword != expectedPassword {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			return
 		}
 
-		// Continue to the next handler if authenticated
+		// Continue to the next handler if authorized
 		c.Next()
 	}
 }

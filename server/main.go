@@ -15,8 +15,9 @@ import (
 )
 
 var (
-	svc       *dynamodb.Client
-	tableName = "restaurants" // Move to an env variable if needed
+	svc           *dynamodb.Client
+	tableName     = "restaurants"
+	adminPassword string
 )
 
 func init() {
@@ -25,6 +26,19 @@ func init() {
 
 	// Populate the table if it is empty
 	populateTableIfEmpty()
+}
+
+func loadEnvironmentVariables() {
+	// Load admin password from environment variable
+	adminPassword = os.Getenv("ADMIN_PASSWORD")
+	if adminPassword == "" {
+		log.Fatalf("ADMIN_PASSWORD environment variable is not set")
+	}
+
+	// Optionally override the table name from an environment variable
+	if envTableName := os.Getenv("TABLE_NAME"); envTableName != "" {
+		tableName = envTableName
+	}
 }
 
 func initializeDynamoDB() {
