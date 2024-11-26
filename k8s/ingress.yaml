@@ -10,13 +10,12 @@ metadata:
 spec:
   ingressClassName: "alb"
   rules:
-  - host: your-domain.com
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: restaurants-api
+            name: restaurants-finder
             port:
-              number: 8080
+              number: 80

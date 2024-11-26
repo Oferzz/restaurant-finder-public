@@ -20,12 +20,12 @@ module "vpc" {
 
   private_subnet_tags = {
     "kubernetes.io/role/internal-elb" = 1
-    "kubernetes.io/cluster/dev-demo"  = "owned"
+    "kubernetes.io/cluster/retaurant-finder-cluster"  = "owned"
   }
 
   public_subnet_tags = {
     "kubernetes.io/role/elb"         = 1
-    "kubernetes.io/cluster/dev-demo" = "owned"
+    "kubernetes.io/cluster/retaurant-finder-cluster" = "owned"
   }
 }
 
@@ -35,7 +35,7 @@ module "eks" {
   source = "./modules/eks"
 
   eks_version = "1.30"
-  eks_name    = "demo"
+  eks_name    = "retaurant-finder-cluster"
   subnet_ids  = module.vpc.private_subnet_ids
   account_id = data.external.aws_account_id.result["result"]
   enable_irsa = true
@@ -81,11 +81,11 @@ module "ecr" {
   source = "./modules/ecr"
 }
 
-// Prometheus
+# // Prometheus
 
-module "prometheus"{
-  source = "./modules/prometheus"
+# module "prometheus"{
+#   source = "./modules/prometheus"
 
-  kube_prometheus_helm_version = "66.2.1"
-  eks_name = module.eks.eks_name
-}
+#   kube_prometheus_helm_version = "66.2.1"
+#   eks_name = module.eks.eks_name
+# }

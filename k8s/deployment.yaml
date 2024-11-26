@@ -16,7 +16,7 @@ spec:
       serviceAccountName: restaurants-finder-sa
       containers:
       - name: restaurants-finder
-        image: 314146301965.dkr.ecr.us-east-1.amazonaws.com/restaurant-api:latest
+        image: 314146301965.dkr.ecr.us-east-1.amazonaws.com/restaurant-finder:latest
         ports:
         - containerPort: 8080
         env:

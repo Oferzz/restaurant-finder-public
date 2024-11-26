@@ -78,7 +78,10 @@ resource "aws_iam_role" "nodes" {
 
   assume_role_policy = jsonencode({
     Statement = [{
-      Action = "sts:AssumeRole"
+      Action = [
+          "sts:AssumeRole",
+          "sts:AssumeRoleWithWebIdentity"
+        ]
       Effect = "Allow"
       Principal = {
         Service = "ec2.amazonaws.com"
@@ -92,6 +95,11 @@ resource "aws_iam_role_policy_attachment" "nodes" {
   for_each = var.node_iam_policies
 
   policy_arn = each.value
+  role       = aws_iam_role.nodes.name
+}
+
+resource "aws_iam_role_policy_attachment" "nodes_dynamodb_custom_access" {
+  policy_arn = aws_iam_policy.eks_dynamodb_access.arn
   role       = aws_iam_role.nodes.name
 }
 

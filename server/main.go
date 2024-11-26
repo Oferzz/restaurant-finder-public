@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"net/http"
 	"os"
 
 	"server/data"
@@ -84,6 +85,11 @@ func setupRoutes(client *dynamodb.Client) *gin.Engine {
 
 	// Middleware for logging searches
 	r.Use(middleware.AuditLog(client))
+
+	// Add a health check endpoint
+	r.GET("/healthz", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"status": "healthy"})
+	})
 
 	// Public routes
 	r.GET("/restaurants/search", func(c *gin.Context) {
