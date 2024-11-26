@@ -2,6 +2,13 @@ provider "aws" {
   region = var.region
 }
 
+data "external" "aws_account_id" {
+  program = [
+    "sh", "-c",
+    "aws sts get-caller-identity --query 'Account' --output text | jq -n --arg account $(cat) '{result: $account}'"
+  ]
+}
+
 // VPC
 
 module "vpc" {
@@ -30,6 +37,8 @@ module "eks" {
   eks_version = "1.30"
   eks_name    = "demo"
   subnet_ids  = module.vpc.private_subnet_ids
+  account_id = data.external.aws_account_id.result["result"]
+  enable_irsa = true
 
   node_groups = {
     general = {
@@ -64,14 +73,6 @@ module "audit_logs_table" {
   hash_key_type  = "S"
   read_capacity  = 10
   write_capacity = 5
-}
-
-// EBS-CSI driver
-
-module "ebs-csi" {
-  source = "./modules/ebs-csi"
-
-  eks_name = module.eks.eks_name
 }
 
 // ECR Repository

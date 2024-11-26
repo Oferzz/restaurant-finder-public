@@ -8,6 +8,11 @@ variable "eks_name" {
   type        = string
 }
 
+variable "account_id" {
+  description = "AWS account_id"
+  type        = string
+}
+
 variable "subnet_ids" {
   description = "List of subnet IDs. Must be in at least two different availability zones."
   type        = list(string)
