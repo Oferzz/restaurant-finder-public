@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+	"log"
 	"strings"
 	"time"
 
@@ -87,6 +88,36 @@ func filterRestaurants(restaurants []models.Restaurant, filters SearchFilters) [
 	return filtered
 }
 
+func FetchRestaurantByID(ctx context.Context, client *dynamodb.Client, tableName string, restaurantID string) (*models.Restaurant, error) {
+	// Prepare the key for querying the item
+	input := &dynamodb.GetItemInput{
+		TableName: &tableName,
+		Key: map[string]types.AttributeValue{
+			"restaurant_id": &types.AttributeValueMemberS{Value: restaurantID},
+		},
+	}
+
+	// Fetch the item from DynamoDB
+	result, err := client.GetItem(ctx, input)
+	if err != nil {
+		return nil, err
+	}
+
+	// Check if the item exists
+	if result.Item == nil {
+		return nil, errors.New("restaurant not found")
+	}
+
+	// Unmarshal the item into a Restaurant struct
+	var restaurant models.Restaurant
+	err = attributevalue.UnmarshalMap(result.Item, &restaurant)
+	if err != nil {
+		return nil, err
+	}
+
+	return &restaurant, nil
+}
+
 func isRestaurantOpen(openingHours map[string]string) bool {
 	// Get current day and time
 	now := time.Now()
@@ -118,45 +149,62 @@ func isRestaurantOpen(openingHours map[string]string) bool {
 }
 
 func AddRestaurant(ctx context.Context, client *dynamodb.Client, tableName string, restaurant models.Restaurant) error {
+	// Log the restaurant object
+	log.Printf("Adding restaurant: %+v", restaurant)
+
 	// Convert restaurant to DynamoDB item
 	item, err := attributevalue.MarshalMap(restaurant)
 	if err != nil {
+		log.Printf("Error marshalling restaurant: %v", err)
 		return err
 	}
+
+	// Log the marshalled item
+	log.Printf("Marshalled item: %+v", item)
 
 	// Add the item to DynamoDB
 	_, err = client.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: &tableName,
 		Item:      item,
 	})
-	return err
+	if err != nil {
+		log.Printf("Error inserting restaurant: %v", err)
+		return err
+	}
+
+	log.Println("Successfully inserted restaurant into DynamoDB")
+	return nil
 }
 
 func RemoveRestaurant(ctx context.Context, client *dynamodb.Client, tableName string, restaurantID string) error {
-	// Define the key for the item to delete
-	key := map[string]types.AttributeValue{
-		"restaurant_id": &types.AttributeValueMemberS{Value: restaurantID},
+	// Build key for deletion
+	key, err := attributevalue.MarshalMap(map[string]string{
+		"restaurant_id": restaurantID,
+	})
+	if err != nil {
+		return err
 	}
 
-	// Remove the item from DynamoDB
-	_, err := client.DeleteItem(ctx, &dynamodb.DeleteItemInput{
+	// Remove the restaurant from DynamoDB
+	_, err = client.DeleteItem(ctx, &dynamodb.DeleteItemInput{
 		TableName: &tableName,
 		Key:       key,
 	})
+
 	return err
 }
 
 func EditRestaurant(ctx context.Context, client *dynamodb.Client, tableName string, restaurant models.Restaurant) error {
-	// Convert updated restaurant to DynamoDB item
 	item, err := attributevalue.MarshalMap(restaurant)
 	if err != nil {
 		return err
 	}
 
-	// Replace the existing item in DynamoDB
+	// Update the restaurant in DynamoDB
 	_, err = client.PutItem(ctx, &dynamodb.PutItemInput{
 		TableName: &tableName,
 		Item:      item,
 	})
+
 	return err
 }

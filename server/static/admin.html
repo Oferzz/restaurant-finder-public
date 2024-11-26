@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    <main>
+        <section id="login-section">
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="password">Admin Password:</label>
+                <input type="password" id="password" placeholder="Enter admin password" required>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <section id="admin-section" style="display: none;">
+            <h2>Restaurant Management</h2>
+            <form id="add-restaurant-form">
+                <h3>Add Restaurant</h3>
+                <input type="text" id="restaurant_name" placeholder="Restaurant Name" required>
+                <input type="text" id="address" placeholder="Address" required>
+                <input type="text" id="phone" placeholder="Phone" required>
+                <input type="text" id="website" placeholder="Website" required>
+
+                <fieldset>
+                    <legend>Opening Hours</legend>
+                    <div>
+                        <label for="monday">Monday:</label>
+                        <input type="text" id="monday" placeholder="e.g., 9:00-17:00">
+                    </div>
+                    <div>
+                        <label for="tuesday">Tuesday:</label>
+                        <input type="text" id="tuesday" placeholder="e.g., 10:00-18:00">
+                    </div>
+                    <div>
+                        <label for="wednesday">Wednesday:</label>
+                        <input type="text" id="wednesday" placeholder="e.g., 9:00-17:00">
+                    </div>
+                    <div>
+                        <label for="thursday">Thursday:</label>
+                        <input type="text" id="thursday" placeholder="e.g., 10:00-18:00">
+                    </div>
+                    <div>
+                        <label for="friday">Friday:</label>
+                        <input type="text" id="friday" placeholder="e.g., 9:00-17:00">
+                    </div>
+                    <div>
+                        <label for="saturday">Saturday:</label>
+                        <input type="text" id="saturday" placeholder="e.g., Closed">
+                    </div>
+                    <div>
+                        <label for="sunday">Sunday:</label>
+                        <input type="text" id="sunday" placeholder="e.g., 9:00-15:00">
+                    </div>
+                </fieldset>
+
+                <input type="text" id="cuisine_type" placeholder="Cuisine Type" required>
+                <label>
+                    <input type="checkbox" id="is_kosher">
+                    Kosher
+                </label>
+                <button type="submit">Add Restaurant</button>
+            </form>
+
+            <section id="edit-restaurant-section">
+                <h3>Edit Restaurant</h3>
+                <form id="edit-restaurant-fetch-form">
+                    <input type="text" id="edit_restaurant_id" placeholder="Restaurant ID" required>
+                    <button type="button" id="fetch-restaurant-btn">Fetch Restaurant Details</button>
+                </form>
+            
+                <form id="edit-restaurant-form" style="display: none;">
+                    <input type="text" id="edit_restaurant_name" placeholder="Restaurant Name">
+                    <input type="text" id="edit_address" placeholder="Address">
+                    <input type="text" id="edit_phone" placeholder="Phone">
+                    <input type="text" id="edit_website" placeholder="Website">
+                    <input type="text" id="edit_cuisine_type" placeholder="Cuisine Type">
+                    <label>
+                        <input type="checkbox" id="edit_is_kosher">
+                        Kosher
+                    </label>
+                    <fieldset>
+                        <legend>Opening Hours</legend>
+                        <div>
+                            <label for="edit_monday">Monday:</label>
+                            <input type="text" id="edit_monday" placeholder="e.g., 9:00-17:00">
+                        </div>
+                        <div>
+                            <label for="edit_tuesday">Tuesday:</label>
+                            <input type="text" id="edit_tuesday" placeholder="e.g., 10:00-18:00">
+                        </div>
+                        <div>
+                            <label for="edit_wednesday">Wednesday:</label>
+                            <input type="text" id="edit_wednesday" placeholder="e.g., 9:00-17:00">
+                        </div>
+                        <div>
+                            <label for="edit_thursday">Thursday:</label>
+                            <input type="text" id="edit_thursday" placeholder="e.g., 10:00-18:00">
+                        </div>
+                        <div>
+                            <label for="edit_friday">Friday:</label>
+                            <input type="text" id="edit_friday" placeholder="e.g., 9:00-17:00">
+                        </div>
+                        <div>
+                            <label for="edit_saturday">Saturday:</label>
+                            <input type="text" id="edit_saturday" placeholder="e.g., Closed">
+                        </div>
+                        <div>
+                            <label for="edit_sunday">Sunday:</label>
+                            <input type="text" id="edit_sunday" placeholder="e.g., 9:00-15:00">
+                        </div>
+                    </fieldset>
+                    <button type="submit">Edit Restaurant</button>
+                </form>
+            </section>
+            
+            <section id="remove-restaurant-section">
+                <h3>Remove Restaurant</h3>
+                <form id="remove-restaurant-form">
+                    <input type="text" id="remove_restaurant_id" placeholder="Restaurant ID" required>
+                    <button type="submit">Remove Restaurant</button>
+                </form>
+            </section>
+
+            <h2>Audit Logs</h2>
+            <section id="audit-logs-section">
+                <button id="fetch-audit-logs-btn">Show Audit Logs</button>
+                <table id="audit-log-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Query</th>
+                            <th>IP</th>
+                            <th>Country</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated via JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+        </section>
+    </main>
+    <script src="/static/admin.js"></script>
+</body>
+</html>

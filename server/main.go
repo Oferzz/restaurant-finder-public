@@ -82,14 +82,17 @@ func setupRoutes(client *dynamodb.Client) *gin.Engine {
 		admin.POST("/restaurants", func(c *gin.Context) {
 			handlers.AddRestaurant(c, client)
 		})
-		admin.PUT("/restaurants", func(c *gin.Context) {
+		r.PUT("/admin/restaurants/:id", func(c *gin.Context) {
 			handlers.EditRestaurant(c, client)
 		})
-		admin.DELETE("/restaurants/:id", func(c *gin.Context) {
+		r.DELETE("/admin/restaurants/:id", func(c *gin.Context) {
 			handlers.RemoveRestaurant(c, client)
 		})
 		admin.GET("/audit-logs", func(c *gin.Context) {
 			handlers.FetchAuditLogs(c, client)
+		})
+		r.GET("/admin/restaurants/:id", func(c *gin.Context) {
+			handlers.GetRestaurantByID(c, client)
 		})
 	}
 
@@ -100,8 +103,8 @@ func main() {
 	// Initialize Gin routes with the DynamoDB client
 	r := setupRoutes(svc)
 
-	r.Static("/static", "./fe")
-	r.StaticFile("/admin", "./fe/admin.html")
+	r.Static("/static", "./static")
+	r.StaticFile("/admin", "./static/admin.html")
 
 	// Determine the port from environment variables
 	port := os.Getenv("PORT")
