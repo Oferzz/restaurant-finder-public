@@ -26,9 +26,9 @@ spec:
               name: {{ .Values.secrets.admin.name }}
               key: {{ .Values.secrets.admin.key }}
         - name: TABLE_NAME
-          value: {{ .env.Values.tableName }}
+          value: {{ .Values.env.tableName }}
         - name: AWS_REGION
-          value: {{ .env.Values.awsRegion }}
+          value: {{ .Values.env.awsRegion }}
         readinessProbe:
           httpGet:
             path: /healthz
