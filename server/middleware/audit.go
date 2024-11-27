@@ -12,7 +12,7 @@ import (
 
 func AuditLog(client *dynamodb.Client) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if c.Request.URL.Path == "/healthz" || strings.HasPrefix(c.Request.URL.Path, "/admin/logs") {
+		if c.Request.URL.Path == "/readiness" || c.Request.URL.Path == "/readyness" || strings.HasPrefix(c.Request.URL.Path, "/admin/logs") {
 			c.Next()
 			return
 		}

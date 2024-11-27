@@ -102,7 +102,7 @@ func setupRoutes(client *dynamodb.Client) *gin.Engine {
 
 	r.GET("/liveness", func(c *gin.Context) {
 		log.Println("Liveness check triggered")
-		c.JSON(http.StatusOK, gin.H{"status": "alive"})
+		c.JSON(http.StatusOK, gin.H{"status": "healthy"})
 	})
 
 	// Public routes
