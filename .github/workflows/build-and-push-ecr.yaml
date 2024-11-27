@@ -3,7 +3,8 @@ name: Build and Push to ECR
 on:
   push:
     paths:
-      - 'server/**' # Trigger only on changes to the server folder
+      - 'server/**'
+      - '.github/workflows/build-and-push-ecr.yaml'
 
 jobs:
   build-and-push-image:
