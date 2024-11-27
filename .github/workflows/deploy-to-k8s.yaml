@@ -43,7 +43,7 @@ jobs:
 
     - name: Deploy using Helm
       run: |
-        helm upgrade --install restaurant-finder ./k8s/helm/restaurant-finder \
+        helm upgrade --install restaurant-finder ./k8s/ \
           --namespace restaurant-finder \
           --create-namespace \
           --set serviceAccount.name=restaurant-finder-sa \
