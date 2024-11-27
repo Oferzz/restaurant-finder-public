@@ -37,15 +37,17 @@ jobs:
       run: |
         aws eks update-kubeconfig --region $AWS_REGION --name retaurant-finder-cluster
     
-    - name: Update Kubernetes Secret
+    - name: Install Helm
       run: |
-        kubectl create secret generic admin-secret \
-          --namespace restaurant-finder \
-          --from-literal=ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
-          --dry-run=client -o yaml | kubectl apply -f -
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-    - name: Deploy Kubernetes manifests
+    - name: Deploy using Helm
       run: |
-        kubectl apply -f k8s/deployment.yaml
-        kubectl apply -f k8s/service.yaml
-        kubectl apply -f k8s/ingress.yaml
+        helm upgrade --install restaurant-finder ./k8s/helm/restaurant-finder \
+          --namespace restaurant-finder \
+          --create-namespace \
+          --set serviceAccount.name=restaurant-finder-sa \
+          --set serviceAccount.roleArn=arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/restaurants-finder-eks-cluster-irsa \
+          --set image.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ vars.ECR_REPOSITORY }} \
+          --set image.tag=${{ github.sha }} \
+          --set adminPassword=${{ secrets.ADMIN_PASSWORD }}

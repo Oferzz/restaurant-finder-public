@@ -1,0 +1,44 @@
+replicaCount: 2
+
+image:
+  repository: 314146301965.dkr.ecr.us-east-1.amazonaws.com/restaurant-finder
+  tag: latest
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  name: restaurant-finder-sa
+  roleArn: arn:aws:iam::314146301965:role/restaurants-finder-eks-cluster-irsa
+
+service:
+  type: LoadBalancer
+  port: 80
+
+adminPassword: ""
+
+ingress:
+  enabled: true
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+  rules:
+    - path: /
+      backend:
+        serviceName: restaurants-finder
+        servicePort: 80
+
+env:
+  TABLE_NAME: "restaurants"
+  AWS_REGION: "us-east-1"
+
+probes:
+  readiness:
+    path: /healthz
+    port: 8080
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  liveness:
+    path: /healthz
+    port: 8080
+    initialDelaySeconds: 15
+    periodSeconds: 20

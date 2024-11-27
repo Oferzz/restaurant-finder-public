@@ -1,10 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: restaurants-finder-ingress
-  namespace: restaurant-finder
+  name: {{ .Release.Name }}-ingress
+  namespace: {{ .Release.Namespace }}
   annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/scheme: {{ .Values.ingress.scheme }}
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
 spec:
@@ -16,6 +16,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: restaurants-finder
+            name: {{ .Release.Name }}
             port:
-              number: 80
+              number: {{ .Values.service.port }}
