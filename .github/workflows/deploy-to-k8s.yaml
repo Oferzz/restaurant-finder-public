@@ -35,6 +35,13 @@ jobs:
         AWS_REGION: ${{ secrets.AWS_REGION }}
       run: |
         aws eks update-kubeconfig --region $AWS_REGION --name infra/main.tf
+    
+    - name: Update Kubernetes Secret
+      run: |
+        kubectl create secret generic admin-secret \
+          --namespace restaurant-finder \
+          --from-literal=ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
+          --dry-run=client -o yaml | kubectl apply -f -
 
     - name: Deploy Kubernetes manifests
       run: |
