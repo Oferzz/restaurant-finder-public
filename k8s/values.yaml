@@ -18,6 +18,7 @@ adminPassword: ""
 secrets:
   admin:
     name: admin-secret
+    key: ADMIN_PASSWORD
 
 ingress:
   enabled: true
