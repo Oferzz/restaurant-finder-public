@@ -36,3 +36,7 @@ jobs:
         IMAGE_TAG=${{ github.sha }}
         IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
         docker push $IMAGE_URI
+    
+    - name: Debug
+      run: |
+        echo Debug
