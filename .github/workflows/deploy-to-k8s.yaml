@@ -1,33 +1,43 @@
-name: Deploy to Kubernetes
+name: Kubernetes Deployment
 
 on:
   push:
     paths:
-      - 'k8s/**' # Trigger only on changes to the k8s folder
+      - 'k8s/**'
 
 jobs:
-  apply-kubernetes-manifests:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout Code
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Install kubectl
+    - name: Install AWS CLI
+      run: |
+        sudo apt-get update && sudo apt-get install -y awscli
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
     - name: Install kubectl
       run: |
         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
         chmod +x kubectl
         sudo mv kubectl /usr/local/bin/
 
-    - name: Configure kubeconfig dynamically
+    - name: Update kubeconfig for EKS
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
       run: |
-        aws eks update-kubeconfig --name  retaurant-finder-cluster --region us-east-1
+        aws eks update-kubeconfig --region $AWS_REGION --name infra/main.tf
 
-    # Step 4: Apply Kubernetes Manifests
-    - name: Apply Kubernetes Manifests
+    - name: Deploy Kubernetes manifests
       run: |
-        kubectl apply -f k8s/deployment.yaml
-        kubectl apply -f k8s/service.yaml
-        kubectl apply -f k8s/ingress.yaml
+        kubectl apply -f k8s/deployment.yml
+        kubectl apply -f k8s/service.yml
+        kubectl apply -f k8s/ingress.yml
