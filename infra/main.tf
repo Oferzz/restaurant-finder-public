@@ -35,7 +35,7 @@ module "eks" {
   source = "./modules/eks"
 
   eks_version = "1.30"
-  eks_name    = "retaurant-finder-cluster"
+  eks_name    = "restaurant-finder-cluster"
   subnet_ids  = module.vpc.private_subnet_ids
   account_id = data.external.aws_account_id.result["result"]
   enable_irsa = true
