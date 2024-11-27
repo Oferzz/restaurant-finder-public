@@ -49,5 +49,5 @@ jobs:
           --set serviceAccount.name=restaurant-finder-sa \
           --set serviceAccount.roleArn=arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/restaurants-finder-eks-cluster-irsa \
           --set image.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ vars.ECR_REPOSITORY }} \
-          --set image.tag=${{ github.sha }} \
+          --set image.tag=latest \
           --set adminPassword=${{ secrets.ADMIN_PASSWORD }}
