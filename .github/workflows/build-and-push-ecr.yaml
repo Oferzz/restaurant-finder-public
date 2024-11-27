@@ -27,13 +27,14 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        IMAGE_TAG=${{ github.sha }}
+        IMAGE_TAG=latest
         IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${ECR_REPOSITORY}:$IMAGE_TAG
+        echo $IMAGE_URI
         docker build -t $IMAGE_URI ./server
 
     - name: Push Docker Image
       run: |
-        IMAGE_TAG=${{ github.sha }}
+        IMAGE_TAG=latest
         IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${ECR_REPOSITORY}:$IMAGE_TAG
         docker push $IMAGE_URI
     
