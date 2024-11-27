@@ -66,7 +66,13 @@ Set the following secrets in your repository:
 	•	AWS_ACCESS_KEY_ID: Your AWS access key.
 	•	AWS_SECRET_ACCESS_KEY: Your AWS secret key.
 	•	AWS_REGION: The AWS region for your resources (e.g., us-east-1).
+    •	AWS_ACCOUNT_ID: The AWS account id for your resources (e.g., 123456789).
 	•	ADMIN_PASSWORD: The admin password for the application.
+
+Required Secrets
+
+Set the following vars in your repository:
+	•	ECR_REPOSITORY: restaurant-finder
 
 Example Workflows
 
