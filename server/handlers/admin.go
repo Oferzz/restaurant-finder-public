@@ -121,17 +121,6 @@ func AdminAuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-func FetchAuditLogs(c *gin.Context, client *dynamodb.Client) {
-	// Retrieve audit logs from services
-	logs, err := services.GetAuditLogs(c.Request.Context(), client)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch audit logs"})
-		return
-	}
-
-	c.JSON(http.StatusOK, logs)
-}
-
 func GetAuditLogsHandler(client *dynamodb.Client) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Parse the 'minutes' query parameter (optional)
