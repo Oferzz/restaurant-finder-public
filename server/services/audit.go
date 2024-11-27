@@ -22,23 +22,29 @@ type GeoResponse struct {
 // GetCountryFromIP fetches the country for a given IP address using an external API.
 func GetCountryFromIP(ip string) (string, error) {
 	client := &http.Client{Timeout: 5 * time.Second}
-	apiURL := fmt.Sprintf("https://ipinfo.io/%s/json", ip) // Example API (replace with your provider)
+	apiURL := fmt.Sprintf("https://ipinfo.io/%s/json", ip) // Replace with your API provider if needed
+
+	log.Printf("Fetching country for IP: %s", ip) // Debug log
 
 	resp, err := client.Get(apiURL)
 	if err != nil {
+		log.Printf("Error calling Geo API: %v", err)
 		return "", fmt.Errorf("failed to fetch geo data: %v", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		log.Printf("Geo API returned status: %v", resp.Status)
 		return "", fmt.Errorf("geo API returned unexpected status: %d", resp.StatusCode)
 	}
 
 	var geoData GeoResponse
 	if err := json.NewDecoder(resp.Body).Decode(&geoData); err != nil {
+		log.Printf("Error parsing Geo API response: %v", err)
 		return "", fmt.Errorf("failed to parse geo data: %v", err)
 	}
 
+	log.Printf("Country for IP %s: %s", ip, geoData.Country) // Log country info
 	if geoData.Country == "" {
 		return "unknown", nil
 	}

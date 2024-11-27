@@ -12,9 +12,7 @@ import (
 
 func AuditLog(client *dynamodb.Client) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// Skip logging for health checks and logs
-		if c.Request.URL.Path == "/healthz" ||
-			strings.HasPrefix(c.Request.URL.Path, "/admin/logs") {
+		if c.Request.URL.Path == "/healthz" || strings.HasPrefix(c.Request.URL.Path, "/admin/logs") {
 			c.Next()
 			return
 		}
@@ -22,14 +20,16 @@ func AuditLog(client *dynamodb.Client) gin.HandlerFunc {
 		clientIP := c.ClientIP()
 		queryString := c.Request.URL.Query().Encode()
 
-		// Fetch country for the client IP
+		// Fetch the country using the IP
 		country, err := services.GetCountryFromIP(clientIP)
 		if err != nil {
 			log.Printf("Error fetching country for IP %s: %v", clientIP, err)
 			country = "unknown"
+		} else {
+			log.Printf("Country for IP %s: %s", clientIP, country) // Ensure logging
 		}
 
-		// Log to audit storage
+		// Log the audit entry
 		err = services.LogAuditEntry(c.Request.Context(), client, queryString, clientIP, country)
 		if err != nil {
 			log.Printf("Failed to log audit entry: %v", err)
