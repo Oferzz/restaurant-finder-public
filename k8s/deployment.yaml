@@ -13,7 +13,7 @@ spec:
       labels:
         app: restaurants-finder
     spec:
-      serviceAccountName: restaurants-finder-sa
+      serviceAccountName: restaurant-finder-sa
       containers:
       - name: restaurants-finder
         image: 314146301965.dkr.ecr.us-east-1.amazonaws.com/restaurant-finder:latest

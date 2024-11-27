@@ -1,7 +1,7 @@
 // EKS
 
 resource "aws_iam_role" "eks" {
-  name = "restuarants-finder-eks-cluster"
+  name = "restaurants-finder-eks-cluster"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -11,13 +11,15 @@ resource "aws_iam_role" "eks" {
         Principal = {
           Service = "eks.amazonaws.com"
         },
-        Action = [
-          "sts:AssumeRole",
-          "sts:AssumeRoleWithWebIdentity"
-        ]
+        Action = "sts:AssumeRole"
       }
     ]
   })
+}
+
+resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = aws_iam_role.eks.name
 }
 
 resource "aws_iam_policy" "eks_dynamodb_access" {
@@ -148,4 +150,37 @@ resource "aws_iam_openid_connect_provider" "this" {
   client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = [data.tls_certificate.this[0].certificates[0].sha1_fingerprint]
   url             = aws_eks_cluster.this.identity[0].oidc[0].issuer
+}
+
+// IAM role for IRSA
+
+resource "aws_iam_role" "eks_irsa" {
+  name = "restaurants-finder-eks-cluster-irsa"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Federated = aws_iam_openid_connect_provider.this[0].arn
+        },
+        Action = "sts:AssumeRoleWithWebIdentity",
+        Condition = {
+          StringEquals = {
+            "${aws_eks_cluster.this.identity[0].oidc[0].issuer}:sub" = "system:serviceaccount:restaurant-finder:restaurant-finder-sa"
+          }
+        }
+      },
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "eks.amazonaws.com"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+
+  depends_on = [aws_iam_openid_connect_provider.this]
 }
