@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"server/models"
 	"server/services"
@@ -103,6 +104,7 @@ func AdminAuthMiddleware() gin.HandlerFunc {
 
 		// Get the expected admin password
 		expectedPassword := os.Getenv("ADMIN_PASSWORD")
+		log.Printf("Expected admin password: %s", expectedPassword)
 		if expectedPassword == "" {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Server is not configured properly"})
 			return
@@ -128,4 +130,31 @@ func FetchAuditLogs(c *gin.Context, client *dynamodb.Client) {
 	}
 
 	c.JSON(http.StatusOK, logs)
+}
+
+func GetAuditLogsHandler(client *dynamodb.Client) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Parse the 'minutes' query parameter (optional)
+		minutesParam := c.Query("minutes")
+		minutes := 0 // Default to 0 (which means last 24 hours in the GetFilteredLogs function)
+
+		if minutesParam != "" {
+			var err error
+			minutes, err = strconv.Atoi(minutesParam)
+			if err != nil || minutes < 0 {
+				c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'minutes' parameter. It must be a positive integer."})
+				return
+			}
+		}
+
+		// Call the service function to fetch logs
+		logs, err := services.GetFilteredLogs(c.Request.Context(), client, minutes) // Correctly call the function from the `services` package
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch audit logs"})
+			return
+		}
+
+		// Return the logs as JSON
+		c.JSON(http.StatusOK, logs)
+	}
 }

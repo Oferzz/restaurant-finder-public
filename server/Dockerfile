@@ -18,7 +18,9 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/server /app/server
+
 COPY --from=builder /app/data /app/data
+COPY --from=builder /app/static /app/static
 
 EXPOSE 8080
 

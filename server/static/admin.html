@@ -130,6 +130,8 @@
 
             <h2>Audit Logs</h2>
             <section id="audit-logs-section">
+                <label for="log-minutes">Fetch logs from the last (minutes):</label>
+                <input type="number" id="log-minutes" min="0" placeholder="Default is 1440 (24 hours)">
                 <button id="fetch-audit-logs-btn">Show Audit Logs</button>
                 <table id="audit-log-table" style="display: none;">
                     <thead>

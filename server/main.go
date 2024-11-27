@@ -5,10 +5,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"strconv"
+	"syscall"
 
 	"server/data"
 	"server/handlers"
 	"server/middleware"
+	"server/services"
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
@@ -22,6 +26,9 @@ var (
 )
 
 func init() {
+	// Load environment variables
+	loadEnvironmentVariables()
+
 	// Initialize the DynamoDB client
 	initializeDynamoDB()
 
@@ -40,6 +47,7 @@ func loadEnvironmentVariables() {
 	if envTableName := os.Getenv("TABLE_NAME"); envTableName != "" {
 		tableName = envTableName
 	}
+	log.Printf("Using table name: %s", tableName)
 }
 
 func initializeDynamoDB() {
@@ -66,7 +74,7 @@ func populateTableIfEmpty() {
 	log.Printf("Table %s is empty. Initializing with data.", tableName)
 
 	// Load restaurant data from JSON file
-	restaurants, err := data.LoadRestaurants("data/restuarants_data.json")
+	restaurants, err := data.LoadRestaurants("data/restaurants_data.json")
 	if err != nil {
 		log.Fatalf("Failed to load restaurants from JSON: %v", err)
 	}
@@ -83,46 +91,75 @@ func populateTableIfEmpty() {
 func setupRoutes(client *dynamodb.Client) *gin.Engine {
 	r := gin.Default()
 
-	// Middleware for logging searches
-	r.Use(middleware.AuditLog(client))
+	// Add middleware
+	r.Use(gin.Logger())                // Request logging
+	r.Use(middleware.AuditLog(client)) // Audit logging for searches
 
 	// Add a health check endpoint
 	r.GET("/healthz", func(c *gin.Context) {
+		log.Println("Health check triggered")
 		c.JSON(http.StatusOK, gin.H{"status": "healthy"})
 	})
 
 	// Public routes
+	setupPublicRoutes(r, client)
+
+	// Admin routes
+	setupAdminRoutes(r, client)
+
+	return r
+}
+
+func setupPublicRoutes(r *gin.Engine, client *dynamodb.Client) {
 	r.GET("/restaurants/search", func(c *gin.Context) {
 		handlers.SearchRestaurants(c, client)
 	})
+}
 
-	// Admin routes
+func setupAdminRoutes(r *gin.Engine, client *dynamodb.Client) {
 	admin := r.Group("/admin", handlers.AdminAuthMiddleware())
 	{
+		admin.GET("/validate", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{"message": "Password is valid"})
+		})
 		admin.POST("/restaurants", func(c *gin.Context) {
 			handlers.AddRestaurant(c, client)
 		})
-		r.PUT("/admin/restaurants/:id", func(c *gin.Context) {
+		admin.PUT("/restaurants/:id", func(c *gin.Context) {
 			handlers.EditRestaurant(c, client)
 		})
-		r.DELETE("/admin/restaurants/:id", func(c *gin.Context) {
+		admin.DELETE("/restaurants/:id", func(c *gin.Context) {
 			handlers.RemoveRestaurant(c, client)
 		})
-		admin.GET("/audit-logs", func(c *gin.Context) {
-			handlers.FetchAuditLogs(c, client)
+		admin.GET("/logs", func(c *gin.Context) {
+			// Fetch query parameter for 'minutes'
+			minutesParam := c.DefaultQuery("minutes", "1440") // Default to 1440 minutes (24 hours)
+			minutes, err := strconv.Atoi(minutesParam)
+			if err != nil || minutes < 0 {
+				c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid minutes parameter"})
+				return
+			}
+
+			// Use the appropriate function from the services package
+			logs, err := services.GetFilteredLogs(c.Request.Context(), client, minutes)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch logs"})
+				return
+			}
+
+			c.JSON(http.StatusOK, logs)
 		})
-		r.GET("/admin/restaurants/:id", func(c *gin.Context) {
+		admin.GET("/restaurants/:id", func(c *gin.Context) {
 			handlers.GetRestaurantByID(c, client)
 		})
 	}
-
-	return r
 }
 
 func main() {
 	// Initialize Gin routes with the DynamoDB client
 	r := setupRoutes(svc)
 
+	// Static file serving
 	r.Static("/static", "./static")
 	r.StaticFile("/admin", "./static/admin.html")
 
@@ -132,9 +169,30 @@ func main() {
 		port = "8080" // Default port
 	}
 
-	// Start the server
-	log.Printf("Starting server on port %s...", port)
-	if err := r.Run(":" + port); err != nil {
-		log.Fatalf("Failed to start server: %v", err)
+	// Graceful shutdown setup
+	srv := &http.Server{
+		Addr:    ":" + port,
+		Handler: r,
 	}
+
+	// Start the server in a goroutine
+	go func() {
+		log.Printf("Starting server on port %s...", port)
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen: %s\n", err)
+		}
+	}()
+
+	// Wait for interrupt signal to gracefully shutdown the server
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
+	<-quit
+	log.Println("Shutting down server...")
+
+	// Gracefully shutdown the server
+	if err := srv.Shutdown(context.Background()); err != nil {
+		log.Fatal("Server forced to shutdown:", err)
+	}
+
+	log.Println("Server exiting")
 }
