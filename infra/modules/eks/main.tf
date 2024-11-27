@@ -182,5 +182,15 @@ resource "aws_iam_role" "eks_irsa" {
     ]
   })
 
-  depends_on = [aws_iam_openid_connect_provider.this]
+  depends_on = [aws_iam_openid_connect_provider.this[0]]
+}
+
+resource "aws_iam_role_policy_attachment" "eks_irsa" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = aws_iam_role.eks_irsa.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks_dynamodb_custom_access_irsa" {
+  policy_arn = aws_iam_policy.eks_dynamodb_access.arn
+  role       = aws_iam_role.eks_irsa.name
 }
