@@ -22,22 +22,42 @@ Restaurants Finder is a Go-based application that provides APIs for managing and
 
 1. **Install Terraform**:  
    [Install Terraform](https://developer.hashicorp.com/terraform/downloads)
-   ```bash
-   # Example for Linux
-   wget https://releases.hashicorp.com/terraform/1.x.x/terraform_1.x.x_linux_amd64.zip
-   unzip terraform_1.x.x_linux_amd64.zip
-   sudo mv terraform /usr/local/bin/
 
+   # Example for Linux
+    ```
+    wget https://releases.hashicorp.com/terraform/1.x.x/terraform_1.x.x_linux_amd64.zip
+    unzip terraform_1.x.x_linux_amd64.zip
+    sudo mv terraform /usr/local/bin/
+    ```
 2.	**Initialize and Apply Terraform**:
+    ```
     cd infra
     terraform init
     terraform apply
+    ```
 
 ## Kubernetes Setup
+
+	•	Ensure you have kubectl and helm installed and configured on your local machine.
+	•	Make sure your AWS credentials are properly configured to interact with EKS and ECR.
+	•	Confirm the restaurant-finder namespace is created or allow Helm to create it.
+
+# Configure the kubeconfig file
+
+`aws eks update-kubeconfig --region <AWS_REGION> --name <EKS_CLUSTER_NAME>`
 
 # Helm Deployment
 
 1.	**Install the Application**:
+
+2.	Update Secrets Locally:
+For local testing, create the admin-secret Kubernetes secret:
+```
+kubectl create secret generic admin-secret \
+  --namespace restaurant-finder \
+  --from-literal=ADMIN_PASSWORD=your-admin-password
+```
+
 Use Helm to deploy the application:
 ```
 helm upgrade --install restaurant-finder ./k8s/ \
@@ -50,42 +70,7 @@ helm upgrade --install restaurant-finder ./k8s/ \
   --set adminPassword=${ADMIN_PASSWORD}
 ```
 
-2.	Update Secrets Locally:
-For local testing, create the admin-secret Kubernetes secret:
-```
-kubectl create secret generic admin-secret \
-  --namespace restaurant-finder \
-  --from-literal=ADMIN_PASSWORD=your-admin-password
-```
-
-GitHub Actions
-
-Required Secrets
-
-Set the following secrets in your repository:
-	•	AWS_ACCESS_KEY_ID: Your AWS access key.
-	•	AWS_SECRET_ACCESS_KEY: Your AWS secret key.
-	•	AWS_REGION: The AWS region for your resources (e.g., us-east-1).
-    •	AWS_ACCOUNT_ID: The AWS account id for your resources (e.g., 123456789).
-	•	ADMIN_PASSWORD: The admin password for the application.
-
-Required Secrets
-
-Set the following vars in your repository:
-	•	ECR_REPOSITORY: restaurant-finder
-
-Example Workflows
-
-Build and Push to ECR
-
-	•	Builds and pushes the Docker image on changes to the server/ folder.
-
-Deploy to Kubernetes
-
-	•	Deploys the application using Helm on changes to the k8s/ folder or workflow.
-
-
-Interacting with the API
+## Interacting with the API
 
 Example curl Commands
 
@@ -118,8 +103,24 @@ Example curl Commands
 
     The pipeline deploys to the Kubernetes cluster on changes to the k8s/ folder.
 
+    GitHub Actions
 
-## Prometheus
+    Required Secrets
+
+    Set the following secrets in your repository:
+        •	AWS_ACCESS_KEY_ID: Your AWS access key.
+        •	AWS_SECRET_ACCESS_KEY: Your AWS secret key.
+        •	AWS_REGION: The AWS region for your resources (e.g., us-east-1).
+        •	AWS_ACCOUNT_ID: The AWS account id for your resources (e.g., 123456789).
+        •	ADMIN_PASSWORD: The admin password for the application.
+
+    Required Vars
+
+    Set the following vars in your repository:
+        •	ECR_REPOSITORY: restaurant-finder
+
+
+## Prometheus installation
 
 1.	Install the Helm Chart:
 ```
