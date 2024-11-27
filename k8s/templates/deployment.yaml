@@ -13,7 +13,7 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      serviceAccountName: {{ .Values.serviceAccountName }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
       containers:
       - name: {{ .Release.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -26,9 +26,9 @@ spec:
               name: {{ .Values.secrets.admin.name }}
               key: {{ .Values.secrets.admin.key }}
         - name: TABLE_NAME
-          value: {{ .Values.tableName }}
+          value: {{ .env.Values.tableName }}
         - name: AWS_REGION
-          value: {{ .Values.awsRegion }}
+          value: {{ .env.Values.awsRegion }}
         readinessProbe:
           httpGet:
             path: /healthz
