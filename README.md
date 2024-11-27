@@ -111,3 +111,29 @@ Example curl Commands
     Deploy to Kubernetes
 
     The pipeline deploys to the Kubernetes cluster on changes to the k8s/ folder.
+
+
+## Prometheus
+
+1.	Install the Helm Chart:
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+```
+
+2.	Deploy the Stack:
+```
+helm upgrade --install prometheus prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --create-namespace \
+  --set grafana.admin.user=admin \
+  -f resources/prometheus.yaml \
+  --set grafana.admin.password=admin
+```
+
+3.	Verify the Installation:
+```
+kubectl get pods -n monitoring
+kubectl get svc -n monitoring
+```
+

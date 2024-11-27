@@ -80,12 +80,3 @@ module "audit_logs_table" {
 module "ecr" {
   source = "./modules/ecr"
 }
-
-# // Prometheus
-
-# module "prometheus"{
-#   source = "./modules/prometheus"
-
-#   kube_prometheus_helm_version = "66.2.1"
-#   eks_name = module.eks.eks_name
-# }
