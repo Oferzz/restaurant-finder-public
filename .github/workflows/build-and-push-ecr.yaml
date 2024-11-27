@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'server/**'
-      - '.github/workflows/build-and-push-ecr.yaml'
 
 jobs:
   build-and-push-image:
