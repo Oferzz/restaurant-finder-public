@@ -168,7 +168,7 @@ resource "aws_iam_role" "eks_irsa" {
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-            "${aws_eks_cluster.this.identity[0].oidc[0].issuer}:sub" = "system:serviceaccount:restaurant-finder:restaurant-finder-sa"
+            "${replace(aws_eks_cluster.this.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:restaurant-finder:restaurant-finder-sa"
           }
         }
       },

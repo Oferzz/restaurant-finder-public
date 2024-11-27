@@ -31,13 +31,13 @@ spec:
           value: {{ .Values.env.AWS_REGION }}
         readinessProbe:
           httpGet:
-            path: /healthz
+            path: /readiness
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 30
         livenessProbe:
           httpGet:
-            path: /healthz
+            path: /liveness
             port: 8080
           initialDelaySeconds: 15
           periodSeconds: 60

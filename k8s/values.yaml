@@ -38,12 +38,12 @@ env:
 
 probes:
   readiness:
-    path: /healthz
+    path: /readiness
     port: 8080
     initialDelaySeconds: 5
     periodSeconds: 10
   liveness:
-    path: /healthz
+    path: /liveness
     port: 8080
     initialDelaySeconds: 15
     periodSeconds: 20

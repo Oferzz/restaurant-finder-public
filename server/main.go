@@ -95,10 +95,14 @@ func setupRoutes(client *dynamodb.Client) *gin.Engine {
 	r.Use(gin.Logger())                // Request logging
 	r.Use(middleware.AuditLog(client)) // Audit logging for searches
 
-	// Add a health check endpoint
-	r.GET("/healthz", func(c *gin.Context) {
-		log.Println("Health check triggered")
+	r.GET("/readiness", func(c *gin.Context) {
+		log.Println("Readiness check triggered")
 		c.JSON(http.StatusOK, gin.H{"status": "healthy"})
+	})
+
+	r.GET("/liveness", func(c *gin.Context) {
+		log.Println("Liveness check triggered")
+		c.JSON(http.StatusOK, gin.H{"status": "alive"})
 	})
 
 	// Public routes
